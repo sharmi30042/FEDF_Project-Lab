@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurants - Restaurant Finder</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body class="list-page">
+  <header>
+    <h1 class="app-name">🍴 Restaurant Finder</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="list.html">Restaurants</a>
+      <a href="detail.html">Details</a>
+      <a href="review.html">Add Review</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Find Your Restaurant</h2>
+    <input type="text" id="searchBar" placeholder="Type restaurant name...">
+    <select id="cuisineFilter">
+      <option value="">All Cuisines</option>
+      <option value="italian">Italian</option>
+      <option value="fast food">Fast Food</option>
+      <option value="coffee">Coffee & Snacks</option>
+    </select>
+    <select id="ratingFilter">
+      <option value="0">Min Rating</option>
+      <option value="3">⭐ 3+</option>
+      <option value="4">⭐ 4+</option>
+      <option value="5">⭐ 5</option>
+    </select>
+
+    <div class="restaurant-container" id="restaurantContainer"></div>
+    <p id="noResults">No restaurants found 💔</p>
+  </main>
+</body>
+</html>

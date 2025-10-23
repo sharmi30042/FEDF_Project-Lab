@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineReview System</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&family=Montserrat:wght@500&family=Playfair+Display:wght@600&family=Fira+Code&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fafafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    section {
+      display: none;
+      text-align: center;
+      padding: 30px;
+      width: 90%;
+      max-width: 850px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0px 8px 30px rgba(0,0,0,0.25);
+      animation: fadeIn 0.8s ease;
+      position: relative;
+    }
+    section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+    }
+    p { font-size: 16px; margin-bottom: 18px; }
+
+    input, select, textarea, button {
+      display: block;
+      margin: 10px auto;
+      padding: 12px 16px;
+      width: 70%;
+      max-width: 420px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #ff7675;
+      box-shadow: 0 0 6px rgba(255,118,117,0.6);
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff7675, #e84393);
+      color: white;
+      cursor: pointer;
+      border: none;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: 0.3s;
+      border-radius: 20px;
+      padding: 10px 20px;
+      width: auto;
+      font-size: 14px;
+    }
+    button:hover {
+      transform: scale(1.08);
+      background: linear-gradient(135deg, #e84393, #ff7675);
+    }
+
+    nav { margin-top: 20px; }
+    nav button {
+      margin: 5px;
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+
+    /* Dashboard Star Rating */
+    .stars {
+      font-size: 22px;
+      color: gold;
+      margin: 15px 0;
+    }
+
+    /* Movie cards */
+    .movie-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 18px auto;
+      max-width: 600px;
+      text-align: left;
+      background: #f1f2f6;
+      border-radius: 14px;
+      padding: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: 0.3s;
+    }
+    .movie-card:hover {
+      transform: scale(1.05);
+      background: #ffeaa7;
+    }
+    .movie-card img {
+      width: 120px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .movie-info { flex: 1; }
+    .movie-actions { text-align: right; }
+
+    /* Neutral Profile Avatar */
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: url('https://cdn-icons-png.flaticon.com/512/847/847969.png') no-repeat center/cover;
+      margin: 0 auto 15px;
+    }
+
+    /* Section-specific backgrounds */
+    #home { background: linear-gradient(135deg, #81ecec, #74b9ff); color: white; }
+    #register { background: linear-gradient(135deg, #fab1a0, #ff7675); color: white; }
+    #movie { background: linear-gradient(135deg, #ffeaa7, #fd79a8); }
+    #expectation { background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white; }
+    #review { background: linear-gradient(135deg, #55efc4, #00cec9); color: white; }
+    #dashboard { background: linear-gradient(135deg, #fd79a8, #e84393); color: white; }
+    #profile { background: linear-gradient(135deg, #636e72, #2d3436); color: white; }
+  </style>
+</head>
+<body>
+
+<!-- ================== HOME ================== -->
+<section id="home" class="active">
+  <h2><i class="fa-solid fa-film"></i> Welcome to CineReview</h2>
+  <p>🍿 Share your expectations & reviews for movies and events!</p>
+  <img src="cinema.jpeg" alt="Cinema" style="width:60%; border-radius:15px; margin:15px auto; box-shadow:0 6px 20px rgba(0,0,0,0.3);">
+  <nav>
+    <button onclick="showSection('register')">Register/Login</button>
+    <button onclick="showSection('movie')">Movies</button>
+    <button onclick="showSection('dashboard')">Dashboard</button>
+    <button onclick="showSection('profile')">Profile</button>
+  </nav>
+</section>
+
+<!-- ================== REGISTER ================== -->
+<section id="register">
+  <h2><i class="fa-solid fa-user"></i> Register / Login</h2>
+  <div class="avatar"></div>
+  <input type="text" id="username" placeholder="Username">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="loginUser()">Login</button>
+  <button onclick="registerUser()">Register</button>
+  <nav><button onclick="showSection('home')">Home</button></nav>
+</section>
+
+<!-- ================== LOGIN SUCCESS ================== -->
+<section id="loginSuccess">
+  <h2>🎉 Login Successful</h2>
+  <p>Welcome <span id="userWelcome"></span>!😎</p>
+  <img src="login.jpeg" style="width:40%; border-radius:15px; margin-top:15px;">
+  <nav><button onclick="showSection('home')">Go to Home</button></nav>
+</section>
+
+<!-- ================== MOVIES ================== -->
+<section id="movie">
+  <h2><i class="fa-solid fa-clapperboard"></i> Movies & Events</h2>
+
+  <div class="movie-card">
+    <img src="inception.jpeg" alt="Inception">
+    <div class="movie-info">
+      <p><strong>Title:</strong> Inception</p>
+      <p><strong>Genre:</strong> Sci-Fi, Thriller</p>
+      <p><strong>Date/Time:</strong> 12th Sep 2025, 7:00 PM</p>
+    </div>
+    <div class="movie-actions">
+      <button onclick="selectMovie('Inception')">Select</button>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="interstellar.jpeg" alt="Interstellar">
+    <div class="movie-info">
+      <p><strong>Title:</strong> Interstellar</p>
+      <p><strong>Genre:</strong> Sci-Fi, Drama</p>
+      <p><strong>Date/Time:</strong> 15th Sep 2025, 6:30 PM</p>
+    </div>
+    <div class="movie-actions">
+      <button onclick="selectMovie('Interstellar')">Select</button>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="avengers.jpeg" alt="Avengers">
+    <div class="movie-info">
+      <p><strong>Title:</strong> Avengers: Endgame</p>
+      <p><strong>Genre:</strong> Action, Adventure</p>
+      <p><strong>Date/Time:</strong> 20th Sep 2025, 8:00 PM</p>
+    </div>
+    <div class="movie-actions">
+      <button onclick="selectMovie('Avengers: Endgame')">Select</button>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="friends.jpeg" alt="Friends Reunion">
+    <div class="movie-info">
+      <p><strong>Event:</strong> Friends Reunion</p>
+      <p><strong>Genre:</strong> Sitcom Special</p>
+      <p><strong>Date/Time:</strong> 25th Sep 2025, 9:00 PM</p>
+    </div>
+    <div class="movie-actions">
+      <button onclick="selectMovie('Friends Reunion')">Select</button>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="coldplay.jpeg" alt="Coldplay Concert">
+    <div class="movie-info">
+      <p><strong>Event:</strong> Coldplay Live Concert</p>
+      <p><strong>Genre:</strong> Music, Live Show</p>
+      <p><strong>Date/Time:</strong> 30th Sep 2025, 7:30 PM</p>
+    </div>
+    <div class="movie-actions">
+      <button onclick="selectMovie('Coldplay Live Concert')">Select</button>
+    </div>
+  </div>
+
+  <nav><button onclick="showSection('home')">Home</button></nav>
+</section>
+
+<!-- ================== EXPECTATION ================== -->
+<section id="expectation">
+  <h2>🌟 Submit Expectation for <span id="expectMovie"></span></h2>
+  <label>Rate your expectation (1-5)</label>
+  <select id="expectRating">
+    <option value="1">⭐- Low</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐ - Medium</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐ - High</option>
+  </select>
+  <textarea id="expectText" placeholder="What do you expect?"></textarea>
+  <button onclick="submitExpectation()">Submit</button>
+  <nav><button onclick="showSection('movie')">Back</button></nav>
+</section>
+
+<!-- ================== EXPECT SUCCESS ================== -->
+<section id="expectSuccess">
+  <h2>✅ Expectation Submitted</h2>
+  <p>Thank you for sharing!</p>
+  <img src="expectation.jpeg" style="width:500px;">
+  <nav><button onclick="showSection('home')">Home</button></nav>
+</section>
+
+<!-- ================== REVIEW ================== -->
+<section id="review">
+  <h2>📝 Submit Review for <span id="reviewMovie"></span></h2>
+  <label>Rate your experience (1-5)</label>
+  <select id="reviewRating">
+    <option value="1">⭐ - Poor</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐ - Average</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+  </select>
+  <textarea id="reviewText" placeholder="Write your review..."></textarea>
+  <label>Did it meet your expectations?</label>
+  <select id="reviewExpect">
+    <option value="YES">Yes😍</option>
+    <option value="NO">No😞</option>
+    <option value="partially">Partially😐</option>
+  </select>
+  <button onclick="submitReview()">Submit</button>
+  <nav><button onclick="showSection('movie')">Back</button></nav>
+</section>
+
+<!-- ================== REVIEW SUCCESS ================== -->
+<section id="reviewSuccess">
+  <h2>🎬 Review Submitted</h2>
+  <p>Thanks for your feedback!</p>
+  <img src="review.jpeg" style="width:500px;">
+  <nav><button onclick="showSection('home')">Home</button></nav>
+</section>
+
+<!-- ================== DASHBOARD ================== -->
+<section id="dashboard">
+  <h2>📊 Review Dashboard</h2>
+  <canvas id="reviewChart" width="400" height="200"></canvas>
+  <div class="stars" id="avgStars"></div>
+  <nav><button onclick="showSection('home')">Home</button></nav>
+</section>
+
+<!-- ================== PROFILE ================== -->
+<section id="profile">
+  <h2>👤 Your Profile</h2>
+  <div class="avatar"></div>
+  <p><strong>Username:</strong> <span id="profileName"></span></p>
+  <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+  <h3>Your Submissions</h3>
+  <ul id="submissionsList"></ul>
+  <nav><button onclick="showSection('home')">Home</button></nav>
+</section>
+
+<!-- ================== SCRIPT ================== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let currentUser = null;
+let submissions = [];
+let selectedMovie = null;
+
+function showSection(id) {
+  document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function selectMovie(movie) {
+  selectedMovie = movie;
+  document.getElementById('expectMovie').innerText = movie;
+  document.getElementById('reviewMovie').innerText = movie;
+  // Go to expectation/review choice
+  if(confirm("Do you want to give Expectation for " + movie + "? Press Cancel for Review.")) {
+    showSection('expectation');
+  } else {
+    showSection('review');
+  }
+}
+
+// Login/Register
+function loginUser() {
+  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
+  if(username && email) {
+    currentUser = {username, email};
+    document.getElementById('userWelcome').innerText = username;
+    document.getElementById('profileName').innerText = username;
+    document.getElementById('profileEmail').innerText = email;
+    showSection('loginSuccess');
+  } else {
+    alert("Enter username & email!");
+  }
+}
+function registerUser() { alert("Registration successful! Please login."); }
+
+// Expectation
+function submitExpectation() {
+  const rating = document.getElementById('expectRating').value;
+  const text = document.getElementById('expectText').value;
+  submissions.push({movie:selectedMovie, type:"Expectation", rating, text});
+  updateProfile();
+  showSection('expectSuccess');
+}
+
+// Review
+function submitReview() {
+  const rating = document.getElementById('reviewRating').value;
+  const text = document.getElementById('reviewText').value;
+  const expect = document.getElementById('reviewExpect').value;
+  submissions.push({movie:selectedMovie, type:"Review", rating, text, expect});
+  updateProfile();
+  showSection('reviewSuccess');
+}
+
+// Profile
+function updateProfile() {
+  const list = document.getElementById('submissionsList');
+  list.innerHTML = "";
+  submissions.forEach(sub => {
+    const li = document.createElement('li');
+    li.innerText = sub.movie + " - " + sub.type + ": Rating " + sub.rating + ", " + sub.text;
+    list.appendChild(li);
+  });
+}
+
+// Dashboard
+function loadDashboard() {
+  const ctx = document.getElementById('reviewChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Expectations', 'Reviews'],
+      datasets: [{
+        label: 'Average Ratings',
+        data: [average('Expectation'), average('Review')],
+        backgroundColor: ['#ffeaa7','#55efc4']
+      }]
+    }
+  });
+
+  let avg = average('Review');
+  let stars = '';
+  for (let i=0; i<5; i++) {
+    stars += i < avg ? '⭐' : '☆';
+  }
+  document.getElementById('avgStars').innerHTML = "Average Review: " + stars;
+}
+function average(type) {
+  const items = submissions.filter(s => s.type===type).map(s => parseInt(s.rating));
+  if(items.length===0) return 0;
+  return items.reduce((a,b)=>a+b,0)/items.length;
+}
+document.getElementById('dashboard').addEventListener('click', loadDashboard);
+</script>
+</body>
+</html>

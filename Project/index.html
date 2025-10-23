@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant Finder</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body.index-page {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff8f5;
+      color: #34495e;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background: #ff6b6b;
+      padding: 20px 0;
+      color: white;
+    }
+
+    .app-name {
+      font-size: 3rem; /* Large app name */
+      margin: 0;
+      font-family: 'Trebuchet MS', sans-serif;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main h2 {
+      font-size: 1.5rem; /* Subheading smaller than app name */
+      margin-top: 30px;
+    }
+
+    main p {
+      font-size: 1.2rem;
+      margin: 15px 20px;
+    }
+
+    /* Banner image styling */
+    .banner-img {
+      width: 500%;       /* Smaller than full width */
+      max-width: 850px; /* Maximum width */
+      height: 50;     /* Keep aspect ratio */
+      margin: 30px auto;
+      display: block;
+      border-radius: 15px; /* Rounded corners */
+      box-shadow: 2px 2px 15px rgba(0,0,0,0.2); /* Shadow effect */
+    }
+  </style>
+</head>
+<body class="index-page">
+  <header>
+    <h1 class="app-name">🍴 Restaurant Finder</h1>
+    <nav>
+      <a href="list.html">Restaurants</a>
+      <a href="detail.html">Details</a>
+      <a href="review.html">Add Review</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Welcome to Restaurant Finder!</h2>
+    <p>Discover the best restaurants, explore ratings, and share your experiences with others 💖</p>
+    <img src="foodbanner.png" alt="Restaurant Finder" class="banner-img">
+  </main>
+</body>
+</html>
